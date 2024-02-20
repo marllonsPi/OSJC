@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    background-color: #F7F7F7;
+    opacity: 0.9;
+}
+
+.my-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    max-width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    margin-top: 120px;
+    padding-top: 20px;
+}
+
+
+.my-table td,
+.my-table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.background-logo {
+    position: fixed;
+    top: 72%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    width: 45%;
+    height: auto;
+    opacity: 1;
+}
+

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordem de Serviço</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header class="my-header">
+        <img src="{{ url_for('static', filename='img/jcheader.png') }}" alt="Logo Empresa" class="logo">
+    
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand">Sistema de OS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url_for('index') }}">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('nova_os') }}">Nova OS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('clientes') }}">Adicionar Cliente</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('indexrelatorio') }}">Relatórios</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Ordem de Serviço</h1>
+        <table class="table my-table">
+            <thead>
+                <tr>
+                    <th>Número da OS</th>
+                    <th>Data</th>
+                    <th>Nome do Cliente</th>
+                    <th>Detalhes</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for os in ordens_de_servico %}
+                <tr>
+                    <td>{{ os.id }}</td>
+                    <td>{{ os.data.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ os.cliente.nome }}</td>
+                    <td><a href="{{ url_for('ordem_de_servico', id=os.id) }}">Detalhes</a></td>
+                    <td>
+                        <form method="post" action="{{ url_for('remover_os', id=os.id) }}">
+                            <input type="submit" value="Remover" onclick="return confirm('Tem certeza que deseja remover esta OS?')" class="btn btn-danger btn-sm">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <img src="{{ url_for('static', filename='img/jcfundo.png') }}" alt="Logo Empresa" class="background-logo">
+
+    <footer>
+        <hr>
+        <p class="text-muted">Desenvolvido por Marllons - Versão 1.0.0</p>
+    </footer>
+
+</body>
+</html>

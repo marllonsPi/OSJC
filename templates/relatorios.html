@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header class="my-header">
+        <img src="{{ url_for('static', filename='img/jcheader.png') }}" alt="Logo Empresa" class="logo">
+
+    
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand">Sistema de OS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url_for('index') }}">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('nova_os') }}">Nova OS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('clientes') }}">Adicionar Cliente</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('indexrelatorio') }}">Relatórios</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Relatórios</h1>
+        <table class="table my-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Data</th>
+                    <th>Cliente</th>
+                    <th>Descrição</th>
+                    <th>Observações</th>
+                    <th>Valor</th>
+                    <th>Forma de pagamento</th>
+                    <th>Detalhes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resultado in resultados %}
+                <tr>
+                    <td>{{ resultado.id }}</td>
+                    <td>{{ resultado.data.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ resultado.cliente.nome }}</td>
+                    <td>{{ resultado.descricao }}</td>
+                    <td>{{ resultado.observacoes }}</td>
+                    <td>{{ resultado.valor_cobrado_formatado }}</td>  <!-- Alteração aqui -->
+                    <td>{{ resultado.forma_pagamento }}</td>
+                    <td><a href="{{ url_for('ordem_de_servico', id=resultado.id) }}">Detalhes</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4"></td>
+                    <td><strong>TOTAL</strong></td>
+                    <td>{{ soma_valores_formatado }}</td>
+                    <td colspan="2"></td>
+                </tr>
+            </tfoot>
+            
+            
+        </table>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+    </div>
+
+    <footer>
+        <hr>
+        <p class="text-muted">Desenvolvido por Marllons - Versão 1.0.0 </p>
+    </footer>
+
+</body>
+</html>

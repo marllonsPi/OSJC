@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nova OS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+
+</head>
+<body>
+    <header class="my-header">
+        <img src="{{ url_for('static', filename='img/jcheader.png') }}" alt="Logo Empresa" class="logo">
+
+    
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand">Sistema de OS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url_for('index') }}">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('nova_os') }}">Nova OS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('clientes') }}">Adicionar Cliente</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('indexrelatorio') }}">Relatórios</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Nova Ordem de Serviço</h1>
+        <form method="POST" action="{{ url_for('nova_os') }}">
+            <div class="form-group row">
+                <label for="data" class="col-md-2 col-form-label">Data:</label>
+                <div class="col-md-6">
+                    <input type="date" class="form-control" id="data" name="data" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="cliente_id" class="col-md-2 col-form-label">Cliente:</label>
+                <div class="col-md-6">
+                    <select class="form-control" id="cliente_id" name="cliente_id" onchange="updateNomeCliente()">
+                        {% for cliente in clientes %}
+                        <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <input type="hidden" name="nome_cliente" id="nome_cliente">
+        
+            <div class="form-group row">
+                <div class="col-md-2"></div>
+                <div class="col-md-6">
+                    <a href="{{ url_for('clientes') }}">Adicionar Cliente</a>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="titulo_servico" class="col-md-2 col-form-label">Título do Serviço:</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="titulo_servico" name="titulo_servico" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="descricao" class="col-md-2 col-form-label">Descrição:</label>
+                <div class="col-md-6">
+                    <textarea class="form-control" id="descricao" name="descricao" required></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="valor_cobrado" class="col-md-2 col-form-label">Valor Cobrado:</label>
+                <div class="col-md-6">
+                    <input type="number" class="form-control" id="valor_cobrado" name="valor_cobrado" step="0.01" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="forma_pagamento" class="col-md-2 col-form-label">Forma de Pagamento:</label>
+                <div class="col-md-6">
+                    <select class="form-control" id="forma_pagamento" name="forma_pagamento" required>
+                        <option value="dinheiro">Dinheiro</option>
+                        <option value="cartao">Cartão</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2"></div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // Obtenha referências aos elementos HTML
+        var clienteSelect = document.getElementById('cliente_id');
+        var nomeClienteInput = document.getElementById('nome_cliente');
+    
+        // Atualize o valor do campo "nome_cliente" ao selecionar um cliente
+        function updateNomeCliente() {
+            var selectedOption = clienteSelect.options[clienteSelect.selectedIndex];
+            nomeClienteInput.value = selectedOption.text;
+        }
+    </script>
+    
+<footer>
+    <hr>
+    <p class="text-muted">Desenvolvido por Marllons - Versão 1.0.0</p>
+</footer>
+
+</body>
+</html>

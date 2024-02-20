@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Clientes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</head>
+<body>
+    <header class="my-header">
+        <img src="{{ url_for('static', filename='img/jcheader.png') }}" alt="Logo Empresa" class="logo">
+    
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand">Sistema de OS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url_for('index') }}">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('nova_os') }}">Nova OS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('clientes') }}">Adicionar Cliente</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('indexrelatorio') }}">Relatórios</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-3">
+        <h1>Lista de Clientes</h1>
+        <table class="table my-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome do Cliente</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.id }}</td>
+                    <td>{{ cliente.nome }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('remover_cliente', id=cliente.id) }}" onsubmit="return confirmRemoval()">
+                            <input type="submit" class="btn btn-danger btn-sm" value="Remover">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Adicionar Novo Cliente</h2>
+        <form method="post" action="{{ url_for('adicionar_cliente') }}">
+            <div class="form-group row">
+                <label for="nome_cliente" class="col-md-2 col-form-label">Nome do Cliente:</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="nome_cliente" name="nome_cliente" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="endereco" class="col-md-2 col-form-label">Endereço:</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="endereco" name="endereco">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="telefone" class="col-md-2 col-form-label">Telefone:</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="telefone" name="telefone">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2"></div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <hr>
+        <p class="text-muted">Desenvolvido por Marllons - Versão 1.0.0</p>
+    </footer>
+</body>
+</html>
