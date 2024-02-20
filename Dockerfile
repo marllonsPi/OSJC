@@ -26,3 +26,4 @@ VOLUME /app/data
 
 # Defina o script de inicialização como o ponto de entrada do contêiner
 ENTRYPOINT ["/app/entrypoint.sh"]
+
