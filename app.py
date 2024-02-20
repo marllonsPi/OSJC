@@ -191,7 +191,7 @@ def remover_os(id):
 
 
 @app.route('/clientes')
-def clientes():
+def clientes(): 
     clientes = Cliente.query.order_by(Cliente.id).all()
     return render_template('clientes.html', clientes=clientes)
 
